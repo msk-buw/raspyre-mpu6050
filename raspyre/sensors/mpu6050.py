@@ -14,8 +14,22 @@ import time
 class MPU6050 (Sensor) :
     power_mgmt_1 = 0x6b
     power_mgmt_2 = 0x6c
+    sensor_attributes = {'accx': "d",
+                         'accy': "d",
+                         'accz': "d",
+                         'temperature': "d",
+                         'gyrox': "d",
+                         'gyroy': "d",
+                         'gyroz': "d"}
     #dictionary of the register adresses and scale factors for the measureable pins
     #these values are taken from the data sheet
+
+    def getFmt(self, axis):
+        fmt = ""
+        # TODO: fail hard if axis does not exist in attributes
+        for a in axis:
+            fmt += self.sensor_attributes[a]
+        return fmt
 
     def __init__ (self, address = 0x68 ):
         self.address = address
@@ -30,7 +44,7 @@ class MPU6050 (Sensor) :
         logger.info('MPU6050 instantiated on address {adr}.'.format(adr=hex(address)))
 
     def getFastRecord(self):
-        register_values = self.bus.read_i2c_block_data(self.address,0x3b,14)
+        register_values = self.bus.read_i2c_block_data(self.address,0x3b,15)
         accx = self.convert2C((register_values[0] << 8) + register_values[1] ) / 16384.0
         accy = self.convert2C((register_values[2] << 8) + register_values[3] ) / 16384.0
         accz = self.convert2C((register_values[4] << 8) + register_values[5] ) / 16384.0
@@ -57,7 +71,7 @@ class MPU6050 (Sensor) :
                 raise AttributeError('Invalid value requested: {req}.'.format(req=request))
         return record
     def getAttributes(self) :
-        return ['accx' , 'accy' , 'accz' , 'temperature' , 'gyrox' , 'gyroy' , 'gyroz' ]
+        return self.sensor_attributes.keys()
 
     def read_word(self, adr):
         high = self.bus.read_byte_data(self.address, adr)
