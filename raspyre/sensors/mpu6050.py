@@ -21,15 +21,9 @@ class MPU6050 (Sensor) :
                          'gyrox': "d",
                          'gyroy': "d",
                          'gyroz': "d"}
+
     #dictionary of the register adresses and scale factors for the measureable pins
     #these values are taken from the data sheet
-
-    def getFmt(self, axis):
-        fmt = ""
-        # TODO: fail hard if axis does not exist in attributes
-        for a in axis:
-            fmt += self.sensor_attributes[a]
-        return fmt
 
     def __init__ (self, address = 0x68 ):
         self.address = address
