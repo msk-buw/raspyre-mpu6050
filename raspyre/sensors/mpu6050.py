@@ -1,7 +1,7 @@
 """
 Implements the MPU6050 sensor for the framework. Only the I2C adress can be configured, either 0x68 or 0x69. There are more options possible, since the ADC on the chip has more settings, but by now we only use the defaults, which are working good enough for us.
 """
-import smbus
+import smbus2
 import math
 import logging
 
@@ -27,7 +27,7 @@ class MPU6050 (Sensor) :
 
     def __init__ (self, address = 0x68 ):
         self.address = address
-        self.bus = smbus.SMBus(1)
+        self.bus = smbus2.SMBus(1)
         #wake up the mpu, it starts in sleep mode
         self.bus.write_byte_data(address , self.power_mgmt_1 , 0)
         #set sps to max

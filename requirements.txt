@@ -1,3 +1,2 @@
 raspyre
-pysmbus
-
+smbus2

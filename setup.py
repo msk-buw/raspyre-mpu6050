@@ -19,7 +19,7 @@ with open(path.join(here, 'HISTORY.rst'), encoding='utf-8') as history_file:
 
 requirements = [
     'raspyre',
-    'spidev'
+    'smbus2'
 ]
 
 test_requirements = [
@@ -36,7 +36,7 @@ setup(
     author="Jan Frederick Eick",
     author_email='jan-frederick.eick@uni-weimar.de',
     url='',
-    packages=find_packages(exclude=['contrib', 'docs', 'tests']),
+    ackages=find_packages(exclude=['contrib', 'docs', 'tests']),
     entry_points={
     #    'console_scripts':[
     #        'raspyre=raspyre.cli:cli',
