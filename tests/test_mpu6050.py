@@ -1,13 +1,13 @@
 from raspyre.sensors.mpu6050 import MPU6050
 from raspyre import sensorbuilder as sb
-import smbus
+import smbus2
 from mock import MagicMock
 import pytest
 
 # NEW STYLE FIXTURE!!!
 @pytest.fixture
 def mpu6050_bus(mocker):
-    mock_smbus = mocker.patch.object(smbus, 'SMBus', autospec=True)
+    mock_smbus = mocker.patch.object(smbus2, 'SMBus', autospec=True)
     mpu = MPU6050(0x68)
     return mpu
 
@@ -22,7 +22,7 @@ def test__MPU6050_init2(mpu6050_bus, mocker):
 
 
 def test__MPU6050_init(mocker):
-    mock_smbus = mocker.patch.object(smbus, 'SMBus', autospec=True)
+    mock_smbus = mocker.patch.object(smbus2, 'SMBus', autospec=True)
     #bus = mocker.Mock()
     #mock_smbus.return_value = bus
     mpu = MPU6050(0x68)
