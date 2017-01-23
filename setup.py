@@ -36,7 +36,7 @@ setup(
     author="Jan Frederick Eick",
     author_email='jan-frederick.eick@uni-weimar.de',
     url='',
-    ackages=find_packages(exclude=['contrib', 'docs', 'tests']),
+    packages=find_packages(exclude=['contrib', 'docs', 'tests']),
     entry_points={
     #    'console_scripts':[
     #        'raspyre=raspyre.cli:cli',
