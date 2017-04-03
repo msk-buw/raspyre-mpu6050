@@ -100,8 +100,9 @@ def get_x_rotation(x,y,z):
 def build(**kwargs) :
     addrstr = kwargs.get('address' , '0x68')
     addr = int(addrstr ,16)
+    sensor = MPU6050(addr)
     logger = logging.getLogger(__name__)
     logger.info("MPU6050 initialised on address {}".format(addrstr))
-    return MPU6050(addr)
+    return sensor
 
 
