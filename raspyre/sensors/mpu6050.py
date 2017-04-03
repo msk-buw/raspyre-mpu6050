@@ -14,13 +14,13 @@ import time
 class MPU6050 (Sensor) :
     power_mgmt_1 = 0x6b
     power_mgmt_2 = 0x6c
-    sensor_attributes = {'accx': ("m/s^2", "d"),
-                         'accy': ("m/s^2", "d"),
-                         'accz': ("m/s^2", "d"),
+    sensor_attributes = {'accx': ("g", "d"),
+                         'accy': ("g", "d"),
+                         'accz': ("g", "d"),
                          'temperature': ("C", "d"),
-                         'gyrox': ("g", "d"),
-                         'gyroy': ("g", "d"),
-                         'gyroz': ("g", "d")}
+                         'gyrox': ("deg/s", "d"),
+                         'gyroy': ("deg/s", "d"),
+                         'gyroz': ("deg/s", "d")}
 
     #dictionary of the register adresses and scale factors for the measureable pins
     #these values are taken from the data sheet
