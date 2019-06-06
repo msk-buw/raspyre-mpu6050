@@ -9,7 +9,6 @@ from raspyre.record import Record
 
 import time
 
-
 class MPU6050 (Sensor) :
     sensor_attributes = {'accx': ("g", "d"),
                          'accy': ("g", "d"),
@@ -84,20 +83,21 @@ class MPU6050 (Sensor) :
         The sensor always samples all possible values. Only the requested are returned.
         """
         record = Record()
-        register_values = self.bus.read_i2c_block_data(self.address,0x3b,14)
         values = {}
+        # perform only 6 byte read when only accelerometer data is requested
+        if not any(channel in ['temperature', 'gyrox', 'gyroy', 'gyroz'] for channel in args):
+            register_values = self.bus.read_i2c_block_data(self.address,0x3b,6)
+        else:  # fetch complete register block
+            register_values = self.bus.read_i2c_block_data(self.address,0x3b,14)
+            values['temperature'] = self._convert2C((register_values[6] << 8) + register_values[7] ) / 340.0 + 36.53
+            values['gyrox'] = self._convert2C((register_values[8] << 8) + register_values[9] ) / self.GYRO_SCALE_MODIFIER_250DEG
+            values['gyroy'] = self._convert2C((register_values[10] << 8) + register_values[11] ) / self.GYRO_SCALE_MODIFIER_250DEG
+            values['gyroz'] = self._convert2C((register_values[12] << 8) + register_values[13] ) / self.GYRO_SCALE_MODIFIER_250DEG
         values['accx'] = self._convert2C((register_values[0] << 8) + register_values[1] ) / self.accel_scale
         values['accy'] = self._convert2C((register_values[2] << 8) + register_values[3] ) / self.accel_scale
         values['accz'] = self._convert2C((register_values[4] << 8) + register_values[5] ) / self.accel_scale
-        values['temperature'] = self._convert2C((register_values[6] << 8) + register_values[7] ) / 340.0 + 36.53
-        values['gyrox'] = self._convert2C((register_values[8] << 8) + register_values[9] ) / self.GYRO_SCALE_MODIFIER_250DEG
-        values['gyroy'] = self._convert2C((register_values[10] << 8) + register_values[11] ) / self.GYRO_SCALE_MODIFIER_250DEG
-        values['gyroz'] = self._convert2C((register_values[12] << 8) + register_values[13] ) / self.GYRO_SCALE_MODIFIER_250DEG
-        for request in args :
-            try:
-                record[request] = values[request]
-            except:
-                raise AttributeError('Invalid value requested: {req}.'.format(req=request))
+        for request in args:
+            record[request] = values[request]
         return record
 
     def getAttributes(self):
