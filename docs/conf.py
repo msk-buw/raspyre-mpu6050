@@ -56,8 +56,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'raspyre-firtsensor'
-copyright = '2016, Paul Debus, Jan Frederick Eick'
+project = 'raspyre-mpu6050'
+copyright = '2019, Paul Debus, Jan Frederick Eick'
 author = 'Paul Debus, Jan Frederick Eick'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -139,7 +139,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'raspyre.tex', 'raspyre-mpu6050 Documentation',
-     'Paul Debus, Jan Frederick Eick', 'manual'),
+     'Jan Frederick Eick, Paul Debus', 'manual'),
 ]
 
 
@@ -160,7 +160,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'raspyre-mpu6050', 'raspyre-mpu6050 Documentation',
-     author, 'raspyre', 'One line description of project.',
+     author, 'raspyre', 'Raspyre MPU6050 sensor driver module',
      'Miscellaneous'),
 ]
 
